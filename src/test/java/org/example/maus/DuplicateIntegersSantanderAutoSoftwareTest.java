@@ -42,11 +42,10 @@ public class DuplicateIntegersSantanderAutoSoftwareTest {
                 arguments("3", List.of(3,3,3,3,3,3)),
                 arguments("1, 2, 3", List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 3, 2, 1)),
                 arguments("2, 4, 6", List.of(9, 8, 7, 6, 5, 4, 3, 2, 1, 6, 4, 2)),
-                arguments("1, 2, 3", List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 3, 2, 1)),
+                arguments("1, 3, 6, 9", List.of(3, 2, 6, 1, 5, 9, 6, 3, 9, 4, 6, 6, 1)),
                 arguments("", List.of())
                 );
     }
-
     public String search_duplicates_sort_them(List<Integer> numberList) {
         var histograph = new HashMap<Integer, Integer>();
         numberList.stream().forEach(digit -> {
