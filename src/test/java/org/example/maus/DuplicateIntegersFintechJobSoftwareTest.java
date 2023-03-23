@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -73,7 +72,9 @@ public class DuplicateIntegersFintechJobSoftwareTest {
         return Stream.of(
                 arguments("4", List.of(1, 2, 3, 4, 5, 6, 7, 8, 4)),
                 arguments("4, 7", List.of(1, 2, 3, 4, 5, 6, 7, 8, 7, 4)),
-                arguments("3", List.of(3,3,3,3,3,3)),
+                arguments("3", List.of(3, 3, 3, 3, 3, 3)),
+                arguments("1, 2, 3", List.of(3, 2, 1, 1, 2, 3)),
+                arguments("-1, 1", List.of(-1, 1,-1, 1)),
                 arguments("1, 2, 3", List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 3, 2, 1)),
                 arguments("2, 4, 6", List.of(9, 8, 7, 6, 5, 4, 3, 2, 1, 6, 4, 2)),
                 arguments("1, 3, 6, 9", List.of(3, 2, 6, 1, 5, 9, 6, 3, 9, 4, 6, 6, 1)),
@@ -105,21 +106,14 @@ public class DuplicateIntegersFintechJobSoftwareTest {
         var duplicates = histogram.entrySet().stream().filter(
                 tuple -> {
                     return tuple.getValue() > 1;
-                }).map(tuple -> tuple.getKey()).collect(Collectors.toList());
-        Collections.sort(duplicates);
-
+                }).map(tuple -> tuple.getKey()).sorted().toList();
         System.out.printf("duplicates=%s\n", duplicates);
 
         var buf = new StringBuilder();
-        // concatenate the each of the duplicates into a text buffer with a comma
-        for (int i = 0; i < duplicates.size(); i++) {
-            if (i != 0) {
-                buf.append(", ");
-            }
-            buf.append(duplicates.get(i));
-        }
+        duplicates.stream().findFirst().ifPresent( x -> buf.append(x));
+        duplicates.stream().skip(1).forEach( x -> buf.append(", "+x));
+
         System.out.printf(">>>> buf='%s'\n\n", buf.toString());
         return buf.toString();
-
     }
 }
